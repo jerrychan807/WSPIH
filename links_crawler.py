@@ -61,10 +61,10 @@ class LinksCrawler():
         :return: 
         '''
         self.options.scope.protocol_must_match = False  # 协议
-        self.options.scope.subdomain_must_match = False  # 子域名
+        self.options.scope.subdomain_must_match = True  # 子域名
         self.options.scope.hostname_must_match = True  # 主机名
         self.options.scope.tld_must_match = True  # 顶级域名
-        self.options.scope.max_depth = None  # 深度
+        self.options.scope.max_depth = 20  # 深度
         self.options.scope.request_methods = [  # 允许的方法
             Request.METHOD_GET,
             Request.METHOD_POST,
@@ -94,8 +94,8 @@ class LinksCrawler():
         '''
         self.focus_extensions = []
         self.focus_extensions.extend(EXCEL_EXTENSIONS)
-        self.focus_extensions.extend(PDF_EXTENSIONS)
-        self.focus_extensions.extend(WORD_EXTENSIONS)
+        # self.focus_extensions.extend(PDF_EXTENSIONS)
+        # self.focus_extensions.extend(WORD_EXTENSIONS)
         print(self.focus_extensions)
 
     def _set_cb_crawler_before_start(self):
@@ -174,7 +174,7 @@ class LinksCrawler():
 
 
 if __name__ == '__main__':
-    subdomain = "stlhh.zt.ccut.edu.cn"
+    subdomain = "http://isbf.sysu.edu.cn"
     links_crawler = LinksCrawler(subdomain)
     links_crawler.prepare()
     links_crawler.setOptions()

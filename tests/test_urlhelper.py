@@ -16,7 +16,10 @@ class TestUrlHelper(unittest.TestCase):
               "http://gqt.dept.ccut.edu.cn/picright.asp?id=468",
               "http://stlhh.zt.ccut.edu.cn",
               "http://www.baidu.com",
-              "http://mse.sysu.edu.cn/"]
+              "http://baidu.com",
+              "http://osa-13.adm.ncu.edu.tw",
+              "http://mse.sysu.edu.cn/",
+              "http://domain.tld'"]
 
     def test_get_hostname(self):
         print('test host name')
