@@ -106,3 +106,4 @@ venv.bak/
 .idea/vcs.xml
 
 /learn_lib
+.DS_Store
