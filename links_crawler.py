@@ -2,17 +2,16 @@
 # -*- coding:utf-8 -*-
 __author__ = 'jerry'
 
-import os, json
-from lib.third.nyawc.Options import Options
+import json
+import os
+from collections import defaultdict
+
+from lib.rules import IGNORED_EXTESIONS, EXCEL_EXTENSIONS
 from lib.third.nyawc.Crawler import Crawler
 from lib.third.nyawc.CrawlerActions import CrawlerActions
+from lib.third.nyawc.Options import Options
 from lib.third.nyawc.http.Request import Request
-
-
-from rules.extension import IGNORED_EXTESIONS, EXCEL_EXTENSIONS, PDF_EXTENSIONS, WORD_EXTENSIONS
-
 from lib.utils.basic import extension, getDomain, makedir
-from collections import defaultdict
 
 
 class LinksCrawler():
@@ -43,6 +42,7 @@ class LinksCrawler():
         self._setPerformanceOptions()
         self._setScopeOptions()
         self._setIdentityOptions()
+        self._setMiscOptions()
         self._setIgnoredExtensions()
         self._setFocusExtensions()
 
@@ -81,6 +81,14 @@ class LinksCrawler():
         '''
         self.options.identity.headers.update({
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"})
+
+    def _setMiscOptions(self):
+        '''
+        设置其他选项
+        :return: 
+        '''
+        self.options.misc.debug = True
+
 
     def _setIgnoredExtensions(self):
         '''
@@ -174,7 +182,7 @@ class LinksCrawler():
 
 
 if __name__ == '__main__':
-    subdomain = "http://isbf.sysu.edu.cn"
+    subdomain = "http://xcb.sysu.edu.cn/xzzq/index.htm"
     links_crawler = LinksCrawler(subdomain)
     links_crawler.prepare()
     links_crawler.setOptions()

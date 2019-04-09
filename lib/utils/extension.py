@@ -6,7 +6,7 @@
 # @File    : extension.py
 
 
-IGNORED_EXTESIONS = ["gif", "jpg", "png", "css", "jpeg", "woff", "ttf", "eot", "svg", "woff2", "ico"]
+IGNORED_EXTESIONS = ["gif", "jpg", "png", "jpeg", "woff", "ttf", "eot", "svg", "woff2", "ico"]
 
 JS_EXTESIONS = ["js"]
 
