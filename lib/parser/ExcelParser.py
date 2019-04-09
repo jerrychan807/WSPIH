@@ -25,9 +25,6 @@ class ExcelParser(BaseParser):
                 for cell_value in sheet.row_values(rownum):
                     if cell_value:
                         cell_value = str(cell_value).strip()
-
-                        print((cell_value))
-
                         idcard_result = self.idcard_search(cell_value)
                         if idcard_result:
                             self.sensitive_dict['idcard'].append(idcard_result)
