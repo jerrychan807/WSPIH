@@ -77,8 +77,9 @@ class CrawlerThread(threading.Thread):
 
         try:
             handler = Handler(self.__options, self.__queue_item)
-            new_requests = handler.get_new_requests()
-
+            new_requests = handler.get_new_requests() # 解析页面获取新的请求
+            print(new_requests)
+            print('---------new_requests------------')
             try:
                 self.__queue_item.response.raise_for_status()
             except Exception:

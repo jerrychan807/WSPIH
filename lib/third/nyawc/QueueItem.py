@@ -92,9 +92,13 @@ class QueueItem(object):
         """
 
         if self.response is not None:
+            # print(self.request.headers)  # debug 用
+            print(self.response.status_code)
+            print(self.response.text)
+            # print('@@@@@@@@@@@@@@@@@@@@@@@@@')
             if self.__response_soup is None:
                 result = BeautifulSoup(self.response.text, "lxml")
-
+                # print(result)
                 if self.decomposed:
                     return result
                 else:

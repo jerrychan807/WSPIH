@@ -120,7 +120,7 @@ class Crawler(object):
             self.__crawler_stop()
 
     def __spawn_new_request(self):
-        """Spawn the first queued request if there is one available.
+        """Spawn the first queued request if there is one available.  取出队列中的第一个请求
 
         Returns:
             bool: True if a new request was spawned, false otherwise.
@@ -211,7 +211,7 @@ class Crawler(object):
             print(traceback.format_exc())
 
     def __request_start(self, queue_item):
-        """Execute the request in given queue item.
+        """Execute the request in given queue item.     执行网络请求
 
         Args:
             queue_item (:class:`nyawc.QueueItem`): The request/response pair to scrape.
@@ -219,7 +219,7 @@ class Crawler(object):
         """
 
         try:
-            action = self.__options.callbacks.request_before_start(self.queue, queue_item)
+            action = self.__options.callbacks.request_before_start(self.queue, queue_item)   # 发送请求前执行 回调函数
         except Exception as e:
             action = None
             print(e)
@@ -233,11 +233,11 @@ class Crawler(object):
             self.__should_spawn_new_requests = True
 
         if action == CrawlerActions.DO_CONTINUE_CRAWLING or action is None:
-            self.queue.move(queue_item, QueueItem.STATUS_IN_PROGRESS)
+            self.queue.move(queue_item, QueueItem.STATUS_IN_PROGRESS)  # 把状态为正在进行的item,从已有的队列中去掉
 
-            thread = CrawlerThread(self.__request_finish, self.__lock, self.__options, queue_item)
+            thread = CrawlerThread(self.__request_finish, self.__lock, self.__options, queue_item)  # 多线程
             self.__threads[queue_item.get_hash()] = thread
-            thread.daemon = True
+            thread.daemon = True  # 后台进程,无法跟进调试
             thread.start()
 
     def __request_finish(self, queue_item, new_requests, request_failed=False):

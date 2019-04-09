@@ -73,11 +73,14 @@ class Handler(object):
 
         content_type = self.__queue_item.response.headers.get('content-type')
         scrapers = self.__get_all_scrapers()
+        # print(scrapers)
         new_requests = []
 
         for scraper in scrapers:
             instance = scraper(self.__options, self.__queue_item)
-            if self.__content_type_matches(content_type, instance.content_types):
+            if self.__content_type_matches(content_type, instance.content_types): # content-type 匹配
+                print(instance.get_requests())
+                print('---------------------')
                 new_requests.extend(instance.get_requests())
 
         return new_requests
@@ -160,8 +163,11 @@ class Handler(object):
 
         Returns:
             bool: True if a match was found, False otherwise.
-
+    
         """
+        # 通过content_type判断
+        # print("The given content type: {0}".format(content_type))
+        # print("All the available content types: {0}".format(available_content_types))
 
         if content_type is None:
             return False

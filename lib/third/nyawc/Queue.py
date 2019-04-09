@@ -105,6 +105,8 @@ class Queue(object):
         """
 
         hash_key = queue_item.get_hash()
+        # eg: 'gethttpatmos.sysueducn/article/2005OrderedDict([(\\'\\', \\'\\')])'
+        # 用请求方法,协议,请求参数等参数拼接起来做为hash值
         items = self.__get_var("items_" + queue_item.status)
 
         if hash_key in items.keys():
