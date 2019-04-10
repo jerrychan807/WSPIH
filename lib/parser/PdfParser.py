@@ -10,12 +10,11 @@ import importlib
 import sys
 from urllib.request import urlopen
 importlib.reload(sys)
-
-from pdfminer.pdfparser import PDFParser, PDFDocument
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from pdfminer.converter import PDFPageAggregator
-from pdfminer.layout import LTTextBoxHorizontal, LAParams
-from pdfminer.pdfinterp import PDFTextExtractionNotAllowed
+from lib.third.pdfminer.pdfparser import PDFParser, PDFDocument
+from lib.third.pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from lib.third.pdfminer.converter import PDFPageAggregator
+from lib.third.pdfminer.layout import LTTextBoxHorizontal, LAParams
+from lib.third.pdfminer.pdfinterp import PDFTextExtractionNotAllowed
 
 
 class PDF_Parser(BaseParser):
