@@ -13,7 +13,7 @@ from lib.third import docx
 from lib.parser.BaseParser import BaseParser
 
 
-class wordParser(BaseParser):
+class WordParser(BaseParser):
     def read(self):
         file = docx.Document(self.file_path)
         for para in file.paragraphs:

@@ -5,16 +5,17 @@
 # software: PyCharm
 
 import unittest
-from lib.parser.WordParser import wordParser
+from lib.parser.WordParser import WordParser
 
 
 class TestwordParser(unittest.TestCase):
     file_path = 'data/docx.docx'
-    wordparserObj = wordParser(file_path)
+    wordparserObj = WordParser(file_path)
 
     def test_get_idcard(self):
         self.wordparserObj.read()
         print(self.wordparserObj.sensitive_dict)
+
 
 if __name__ == '__main__':
     unittest.main()

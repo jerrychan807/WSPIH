@@ -9,6 +9,7 @@ from lib.parser.BaseParser import BaseParser
 import importlib
 import sys
 from urllib.request import urlopen
+
 importlib.reload(sys)
 from lib.third.pdfminer.pdfparser import PDFParser, PDFDocument
 from lib.third.pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
@@ -17,7 +18,7 @@ from lib.third.pdfminer.layout import LTTextBoxHorizontal, LAParams
 from lib.third.pdfminer.pdfinterp import PDFTextExtractionNotAllowed
 
 
-class PDF_Parser(BaseParser):
+class PdfParser(BaseParser):
     def read(self):
         print(self.file_path)
         # 文件读取
@@ -73,9 +74,3 @@ class PDF_Parser(BaseParser):
                         self.sensitive_dict['email'].append(email_result)
         fp.close()
         return self.sensitive_dict
-
-
-
-
-
-
