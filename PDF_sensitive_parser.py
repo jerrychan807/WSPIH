@@ -28,7 +28,10 @@ def parse(url_path, result_path, sensitive_words):
 
     '''解析PDF文本，（表格并不能完全解析）命中敏感词将保持到result_path中'''
     print(url_path)
-    fp = urlopen(url_path)
+    if r'://' in url_path:
+        fp = urlopen(url_path)
+    else:
+        fp = open(url_path)
     # fp = open(url_path, 'rb')
     # 用文件对象创建一个PDF文档分析器
     parser = PDFParser(fp)
@@ -63,10 +66,8 @@ def parse(url_path, result_path, sensitive_words):
             # 一般包括LTTextBox, LTFigure, LTImage, LTTextBoxHorizontal 等等
             # 想要获取文本就获得对象的text属性，
             for x in layout:
-                # if (isinstance(x, LTTextBoxHorizontal)):
-                check_raw = x.get_text()
-                with open('./localpdf.txt', 'a') as file:
-                    file.write(check_raw+"\n")
+                if (isinstance(x, LTTextBoxHorizontal)):
+                    check_raw = x.get_text()
                 # print(check_raw)
                 for word in sensitive_words:
                     if word in check_raw:
@@ -76,17 +77,15 @@ def parse(url_path, result_path, sensitive_words):
                             return
                     else:
                         pass
-                # else:
-                #     check_raw = x.get_text()
-                #     with open('./localpdf.txt','a') as file:
-                #         file.write(check_raw+"\n")
+                else:
+                    pass
 
 
 
 
 
-# if __name__ == '__main__':
-# parse('http://math.ecnu.edu.cn/~latex/docs/packages/fancyhdr_chs.pdf',
-#       r'./a.txt', [r'\renewcommand{\floatpagefraction}{0.35}]'])
+if __name__ == '__main__':
+    parse('http://math.ecnu.edu.cn/~latex/docs/packages/fancyhdr_chs.pdf',
+        r'./a.txt', ['升级'])
 
 

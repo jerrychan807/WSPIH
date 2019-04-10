@@ -36,6 +36,5 @@ def testing_senwords(text, sensitive_words):
             return word+''
 
 
-# if __name__ == "__main__":
-#     parser('/Users/jack/Downloads/text.docx', ['政治面貌'], './a.txt')
+
 
