@@ -107,3 +107,4 @@ venv.bak/
 
 /learn_lib
 .DS_Store
+/tmp

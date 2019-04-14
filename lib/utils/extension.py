@@ -3,7 +3,7 @@
 # @Time    : 2019/4/1 12:23 AM
 # @Author  : Jerry
 # @Desc    : 
-# @File    : extension.py
+# @File    : getExtension.py
 
 
 IGNORED_EXTESIONS = ["gif", "jpg", "png", "jpeg", "woff", "ttf", "eot", "svg", "woff2", "ico"]

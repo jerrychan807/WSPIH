@@ -79,8 +79,8 @@ class Handler(object):
         for scraper in scrapers:
             instance = scraper(self.__options, self.__queue_item)
             if self.__content_type_matches(content_type, instance.content_types): # content-type 匹配
-                print(instance.get_requests())
-                print('---------------------')
+                # print(instance.get_requests())
+                # print('---------------------')
                 new_requests.extend(instance.get_requests())
 
         return new_requests

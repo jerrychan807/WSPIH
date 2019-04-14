@@ -8,12 +8,17 @@
 import os
 import pathlib
 
-def makedir(path):
+
+def getCurrentPath():
+    current_path = os.getcwd()
+    return current_path
+
+def makeDir(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
 
-def extension(str):
+def getExtension(str):
     if "?" in str:
         str = str[0:str.find("?")]
     str = pathlib.Path(str).suffix
