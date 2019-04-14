@@ -2,16 +2,14 @@
 # -*- coding:utf-8 -*-
 __author__ = 'jerry'
 
-import json
-import os
 from collections import defaultdict
 
-from lib.rules import IGNORED_EXTESIONS, EXCEL_EXTENSIONS
+from lib.common.basic import getExtension, getDomain
 from lib.third.nyawc.Crawler import Crawler
 from lib.third.nyawc.CrawlerActions import CrawlerActions
 from lib.third.nyawc.Options import Options
 from lib.third.nyawc.http.Request import Request
-from lib.utils.basic import extension, getDomain, makedir
+from lib.utils.extension import IGNORED_EXTESIONS, EXCEL_EXTENSIONS, WORD_EXTENSIONS, PDF_EXTENSIONS
 
 
 class LinksCrawler():
@@ -20,7 +18,7 @@ class LinksCrawler():
         self.project_name = project_name
         self.options = Options()
         self.crawled_urls_to_check_dups = []
-        self.file_links = []
+        self.file_links = {'word': [], 'excel': [], 'pdf': []}
         self.other_links = defaultdict(list)
 
     def prepare(self):
@@ -28,15 +26,7 @@ class LinksCrawler():
         预处理url
         '''
         self.subdomain_url = 'http://' + self.subdomain if 'http' not in self.subdomain else self.subdomain
-        self.domain = getDomain(self.subdomain_url)
-        current_path = os.getcwd()
-        project_path = os.path.join(current_path, self.project_name)
-        self.reuslt_path = os.path.join(project_path, self.domain)
-        makedir(self.reuslt_path)
-
-        print(self.subdomain_url)
-        print(self.domain)
-        print(self.reuslt_path)
+        self.subdomain_name = getDomain(self.subdomain_url)
 
     def setOptions(self):
         self._setPerformanceOptions()
@@ -44,7 +34,7 @@ class LinksCrawler():
         self._setIdentityOptions()
         self._setMiscOptions()
         self._setIgnoredExtensions()
-        self._setFocusExtensions()
+        # self._setFocusExtensions()
 
     def _setPerformanceOptions(self):
         '''
@@ -89,22 +79,21 @@ class LinksCrawler():
         '''
         self.options.misc.debug = True
 
-
     def _setIgnoredExtensions(self):
         '''
         设置排除的拓展名
         '''
         self.ignored_extensions = IGNORED_EXTESIONS
 
-    def _setFocusExtensions(self):
-        '''
-        设置需要的拓展名 
-        '''
-        self.focus_extensions = []
-        self.focus_extensions.extend(EXCEL_EXTENSIONS)
-        # self.focus_extensions.extend(PDF_EXTENSIONS)
-        # self.focus_extensions.extend(WORD_EXTENSIONS)
-        print(self.focus_extensions)
+    # def _setFocusExtensions(self):
+    #     '''
+    #     设置需要的拓展名
+    #     '''
+    #     self.focus_extensions = []
+    #     self.focus_extensions.extend(EXCEL_EXTENSIONS)
+    #     self.focus_extensions.extend(PDF_EXTENSIONS)
+    #     self.focus_extensions.extend(WORD_EXTENSIONS)
+    #     print(self.focus_extensions)
 
     def _set_cb_crawler_before_start(self):
         global subdomain_url
@@ -130,31 +119,34 @@ class LinksCrawler():
         def cb_request_before_start(queue, queue_item):
             if queue_item.request.url in crawled_urls_to_check_dups:  # To avoid duplicate links crawling
                 return CrawlerActions.DO_SKIP_TO_NEXT
-            if extension(queue_item.request.url) in ignored_extensions:  # Don't crawl gif, jpg , etc
+            if getExtension(queue_item.request.url) in ignored_extensions:  # Don't crawl gif, jpg , etc
                 return CrawlerActions.DO_SKIP_TO_NEXT
             return CrawlerActions.DO_CONTINUE_CRAWLING
 
         self.options.callbacks.request_before_start = cb_request_before_start  # Called before the crawler starts a new request. Default is a null route.
 
     def _set_cb_request_after_finish(self):
-        global crawled_urls_to_check_dups, file_links
-        focus_extensions = self.focus_extensions
+        global crawled_urls_to_check_dups, file_links, other_links
+
         crawled_urls_to_check_dups = self.crawled_urls_to_check_dups
         file_links = self.file_links
-        result_path = self.reuslt_path
         other_links = self.other_links
 
         def cb_request_after_finish(queue, queue_item, new_queue_items):
             crawled_urls_to_check_dups.append(queue_item.request.url)  # Add newly obtained URL in list
-            # print('-----------')
-            # print(crawled_urls_to_check_dups)
-            # print('-----------')
-            if extension(queue_item.request.url).lower() in focus_extensions:
+            url_extension = getExtension(queue_item.request.url).lower()
+            if url_extension in EXCEL_EXTENSIONS:
                 path = queue_item.request.url
-                file_links.append(path)
-                open(result_path + "/" + "file_links.json", "w").write(str(json.dumps(file_links)))
-                print(" File > {}".format(queue_item.request.url))
-
+                file_links['excel'].append(path)
+                print("[*] Excel > {}".format(path))
+            elif url_extension in WORD_EXTENSIONS:
+                path = queue_item.request.url
+                file_links['word'].append(path)
+                print("[*] Word > {}".format(path))
+            elif url_extension in PDF_EXTENSIONS:
+                path = queue_item.request.url
+                file_links['pdf'].append(path)
+                print("[*] Pdf > {}".format(path))
             else:
                 if ("?" in queue_item.request.url):
                     path = queue_item.request.url[:queue_item.request.url.find("?")]
@@ -164,8 +156,14 @@ class LinksCrawler():
                     query = ""
                 other_links[path].append(query)
 
-                open(result_path + "/" + "others_links.json", "w").write(str(json.dumps(other_links)))
-                print(" Others> {}".format(queue_item.request.url))
+            # open(result_path + "/" + "file_links.json", "w").write(str(json.dumps(file_links)))
+            # print(" File > {}".format(queue_item.request.url))
+
+            # else:
+
+            #
+            #     open(result_path + "/" + "others_links.json", "w").write(str(json.dumps(other_links)))
+            #     print(" Others> {}".format(queue_item.request.url))
 
             return CrawlerActions.DO_CONTINUE_CRAWLING
 
@@ -187,3 +185,4 @@ if __name__ == '__main__':
     links_crawler.prepare()
     links_crawler.setOptions()
     links_crawler.startCrawl()
+    print(links_crawler.file_links)
