@@ -148,22 +148,14 @@ class LinksCrawler():
                 file_links['pdf'].append(path)
                 print("[*] Pdf > {}".format(path))
             else:
-                if ("?" in queue_item.request.url):
-                    path = queue_item.request.url[:queue_item.request.url.find("?")]
-                    query = queue_item.request.url[queue_item.request.url.find("?"):]
-                else:
-                    path = queue_item.request.url
-                    query = ""
-                other_links[path].append(query)
-
-            # open(result_path + "/" + "file_links.json", "w").write(str(json.dumps(file_links)))
-            # print(" File > {}".format(queue_item.request.url))
-
-            # else:
-
-            #
-            #     open(result_path + "/" + "others_links.json", "w").write(str(json.dumps(other_links)))
-            #     print(" Others> {}".format(queue_item.request.url))
+                # if ("?" in queue_item.request.url):
+                #     path = queue_item.request.url[:queue_item.request.url.find("?")]
+                #     query = queue_item.request.url[queue_item.request.url.find("?"):]
+                # else:
+                #     path = queue_item.request.url
+                #     query = ""
+                # other_links[path].append(query)
+                pass
 
             return CrawlerActions.DO_CONTINUE_CRAWLING
 
