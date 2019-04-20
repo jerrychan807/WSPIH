@@ -74,4 +74,5 @@ class PdfParser(BaseParser):
                             if email_result:
                                 self.sensitive_dict['email'].append(email_result)
         fp.close()
+        self.reduce_error_report()
         return self.sensitive_dict

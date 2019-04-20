@@ -31,3 +31,11 @@ class BaseParser():
     @classmethod
     def email_search(cls, item_value):
         return cls.re_search(EMAIL_REGEX, item_value)
+
+    def reduce_error_report(self):
+        '''
+        减少误报
+        '''
+        for key, sensitive_list in self.sensitive_dict.items():
+            if len(sensitive_list) < 4:
+                self.sensitive_dict[key] = {}

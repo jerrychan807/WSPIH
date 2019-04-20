@@ -37,4 +37,5 @@ class ExcelParser(BaseParser):
                         if email_result:
                             self.sensitive_dict['email'].append(email_result)
 
+        self.reduce_error_report()
         return self.sensitive_dict
