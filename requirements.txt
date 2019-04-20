@@ -1,0 +1,10 @@
+xlrd==1.1.0
+requests==2.21.0
+gevent==1.2.2
+ply==3.10
+setuptools==36.5.0.post20170921
+requests_toolbelt==0.9.1
+lxml==4.3.0
+beautifulsoup4==4.7.1
+futures==3.2.0
+tldextract==2.2.1
