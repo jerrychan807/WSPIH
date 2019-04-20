@@ -7,6 +7,7 @@
 
 import json
 import os
+import sys
 
 from lib.common.basic import getCurrentPath, makeDir
 from LinksCrawler import LinksCrawler
@@ -102,8 +103,18 @@ class SensitivesHunter():
             f.write(str(json.dumps(self.result_dict)))
 
 
+def main(target_txt, project_name):
+    with open(target_txt, 'r') as f:
+        url_list = [url.strip() for url in f]
+    print("[*] target length is :{}".format(len(url_list)))
+    for url in url_list:
+        hunter = SensitivesHunter(url, project_name)
+        hunter.startHunt()
+
+
 if __name__ == '__main__':
-    url = 'http://wenfa.sdau.edu.cn'
-    project_name = 'tmp'
-    hunter = SensitivesHunter(url, project_name)
-    hunter.startHunt()
+    # url = 'http://wenfa.sdau.edu.cn'
+    # project_name = 'tmp'
+    target_txt = sys.argv[1]
+    project_name = sys.argv[2] if sys.argv[2] else 'tmp'
+    main(target_txt, project_name)
