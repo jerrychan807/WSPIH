@@ -13,6 +13,7 @@ def getCurrentPath():
     current_path = os.getcwd()
     return current_path
 
+
 def makeDir(path):
     if not os.path.exists(path):
         os.makedirs(path)
@@ -28,3 +29,8 @@ def getExtension(str):
 def getDomain(sub_domain_url):
     domain = sub_domain_url[sub_domain_url.find("://") + 3:]
     return domain
+
+
+def deleteFile(path):
+    if os.path.exists(path):
+        os.remove(path)

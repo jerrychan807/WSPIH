@@ -20,7 +20,7 @@ from lib.third.pdfminer.pdfinterp import PDFTextExtractionNotAllowed
 
 class PdfParser(BaseParser):
     def read(self):
-        print(self.file_path)
+        # print(self.file_path)
         # 文件读取
         if r'://' in self.file_path:
             fp = urlopen(self.file_path, 'rb')
@@ -61,16 +61,17 @@ class PdfParser(BaseParser):
                     if (isinstance(x, LTTextBoxHorizontal)):
                         check_raw = x.get_text()
                         check_raw = str(check_raw).strip()
-                    idcard_result = self.idcard_search(check_raw)
-                    if idcard_result:
-                        self.sensitive_dict['idcard'].append(idcard_result)
+                        if check_raw:
+                            idcard_result = self.idcard_search(check_raw)
+                            if idcard_result:
+                                self.sensitive_dict['idcard'].append(idcard_result)
 
-                    phone_result = self.phone_search(check_raw)
-                    if phone_result:
-                        self.sensitive_dict['phone'].append(phone_result)
+                            phone_result = self.phone_search(check_raw)
+                            if phone_result:
+                                self.sensitive_dict['phone'].append(phone_result)
 
-                    email_result = self.email_search(check_raw)
-                    if email_result:
-                        self.sensitive_dict['email'].append(email_result)
+                            email_result = self.email_search(check_raw)
+                            if email_result:
+                                self.sensitive_dict['email'].append(email_result)
         fp.close()
         return self.sensitive_dict

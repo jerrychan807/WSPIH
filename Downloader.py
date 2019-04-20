@@ -13,7 +13,6 @@ requests.packages.urllib3.disable_warnings()
 
 from lib.config import log
 from lib.common.basic import makeDir
-from lib.common.exception import exception
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1.6) ",
            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",

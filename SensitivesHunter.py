@@ -8,9 +8,10 @@
 import json
 import os
 
+from lib.common.basic import getCurrentPath, makeDir
 from LinksCrawler import LinksCrawler
 from Downloader import DownLoader
-from lib.common.basic import getCurrentPath, makeDir
+from SensitiveFileParser import SensitiveFileParser
 
 
 class SensitivesHunter():
@@ -18,14 +19,17 @@ class SensitivesHunter():
         self.start_url = url
         self.project_name = project_name
         self.crawled_file_links_dict = {}
+        self.result_dict = {}
 
     def startHunt(self):
         self.crawlLinks()  # 爬取链接
         self.prepare(self.links_crawler.subdomain_name)
         self.saveLinksInFile(self.links_crawler.file_links, self.links_crawler.other_links)
-        self.parseFileLinks() # 解析爬取到的文件url
+        self.parseFileLinks()  # 解析爬取到的文件url
         for file_type, url_file_list in self.crawled_file_links_dict.items():
-            self.downloadFile(url_file_list, file_type)
+            downloaded_file_path_list = self.downloadFile(url_file_list, file_type)
+            self.detectSensitiveFile(downloaded_file_path_list, file_type)
+        self.saveResultFile()
 
     def prepare(self, subdomain_name):
         '''
@@ -38,6 +42,7 @@ class SensitivesHunter():
         makeDir(self.domain_path)
         self.file_links_path = os.path.join(self.domain_path, 'file_links.json')
         self.other_links_path = os.path.join(self.domain_path, 'other_links.json')
+        self.finally_result_path = os.path.join(self.domain_path, 'result.json')
 
     def crawlLinks(self):
         '''
@@ -67,7 +72,7 @@ class SensitivesHunter():
             with open(self.file_links_path, 'r') as f:
                 print('[*] reading {0}'.format(self.file_links_path))
                 self.crawled_file_links_dict = json.load(f)
-                os.remove(self.file_links_path)  # 删除
+                # os.remove(self.file_links_path)  # 删除
 
     def downloadFile(self, url_file_list, file_type):
         '''
@@ -75,11 +80,26 @@ class SensitivesHunter():
         '''
         download = DownLoader(self.domain_path, url_file_list, file_type)
         download.prepare()
-        result = download.startDownload()
-        print(result)
+        downloaded_file_path = download.startDownload()
+        return downloaded_file_path
 
-    def detectSensitiveFile(self, file_type):
-        pass
+    def detectSensitiveFile(self, downloaded_file_path_list, file_type):
+        '''
+        检测含敏感信息的文件
+        :param file_type: 文件类型 
+        :return: 
+        '''
+        parser = SensitiveFileParser(downloaded_file_path_list, file_type)
+        sensitive_result_dict = parser.startParse()
+        if sensitive_result_dict:
+            self.result_dict = dict(sensitive_result_dict.items())
+
+    def saveResultFile(self):
+        '''
+        保存最终结果 
+        '''
+        with open(self.finally_result_path, "w") as f:
+            f.write(str(json.dumps(self.result_dict)))
 
 
 if __name__ == '__main__':
