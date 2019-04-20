@@ -38,4 +38,4 @@ class BaseParser():
         '''
         for key, sensitive_list in self.sensitive_dict.items():
             if len(sensitive_list) < 4:
-                self.sensitive_dict[key] = {}
+                self.sensitive_dict[key] = []
