@@ -99,8 +99,10 @@ class SensitivesHunter():
         '''
         保存最终结果 
         '''
-        with open(self.finally_result_path, "w") as f:
-            f.write(str(json.dumps(self.result_dict)))
+
+        if len(self.result_dict):
+            with open(self.finally_result_path, "w") as f:
+                f.write(str(json.dumps(self.result_dict)))
 
 
 def main(target_txt, project_name):
