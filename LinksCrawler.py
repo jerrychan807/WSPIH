@@ -180,7 +180,7 @@ class LinksCrawler():
 
 
 if __name__ == '__main__':
-    subdomain = "http://xcb.sysu.edu.cn/xzzq/index.htm"
+    subdomain = "http://wenfa.sdau.edu.cn"
     links_crawler = LinksCrawler(subdomain)
     links_crawler.prepare()
     links_crawler.setOptions()
