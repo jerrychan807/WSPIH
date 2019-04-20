@@ -1,0 +1,9 @@
+find src/* -name "result.json"
+
+awk '{print NR}' test1.txt | tail -n1
+
+find src10000/* -name "*excel*"  
+
+ls -l src10000/ |grep "^d"| wc -l   
+
+grep -rn "yjsc.lzjtu.edu.cn" http_src.txt   
