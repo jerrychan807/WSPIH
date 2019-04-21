@@ -7,3 +7,6 @@ find src10000/* -name "*excel*"
 ls -l src10000/ |grep "^d"| wc -l   
 
 grep -rn "yjsc.lzjtu.edu.cn" http_src.txt   
+
+cat http_src.txt| head -n 20000 | tail -n +10001 > http-src-1w-2w.txt
+cat http_src.txt| head -n 30000 | tail -n +20001 > http-src-2w-3w.txt
