@@ -9651,7 +9651,6 @@ http://zspgc.nefu.edu.cn
 http://xsc.lmu.edu.cn
 http://alumni2014.ctbu.edu.cn
 http://yt.tust.edu.cn
-http://web12.hitwh.edu.cn
 http://just.ustc.edu.cn
 http://cityjg.dlut.edu.cn
 http://lenp.bnu.edu.cn
@@ -9891,7 +9890,7 @@ http://ccnu.edu.cn
 http://my.sysu.edu.cn
 http://storage.bsc.ustc.edu.cn
 http://nhyj.hainnu.edu.cn
-http://ÓòÃû
+http://ï¿½ï¿½ï¿½ï¿½
 http://yx.scuec.edu.cn
 http://kggs.zju.edu.cn
 http://self.hebut.edu.cn
@@ -9998,3 +9997,4 @@ http://5yjpkc.nuc.edu.cn
 http://acc.zzu.edu.cn
 http://sms.xjnu.edu.cn
 http://cpp.seu.edu.cn
+http://web12.hitwh.edu.cn
