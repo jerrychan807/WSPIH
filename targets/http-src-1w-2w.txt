@@ -14,7 +14,6 @@ http://bsbm.smmu.edu.cn
 http://mc.xhu.edu.cn
 http://lib.bc.buu.edu.cn
 http://yxy.zucc.edu.cn
-http://2rd9.chnu.edu.cn
 http://tmxy.aust.edu.cn
 http://honors.cau.edu.cn
 http://eteach.qust.edu.cn
