@@ -21,6 +21,12 @@ class LinksCrawler():
         self.file_links = {'word': [], 'excel': [], 'pdf': []}
         self.other_links = defaultdict(list)
 
+    def __del__(self):
+
+        print("__del__方法被调用")
+        del self.crawler
+        del self.crawled_urls_to_check_dups
+
     def prepare(self):
         '''
         预处理url
