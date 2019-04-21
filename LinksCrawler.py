@@ -10,7 +10,7 @@ from lib.third.nyawc.CrawlerActions import CrawlerActions
 from lib.third.nyawc.Options import Options
 from lib.third.nyawc.http.Request import Request
 from lib.utils.extension import IGNORED_EXTESIONS, EXCEL_EXTENSIONS, WORD_EXTENSIONS, PDF_EXTENSIONS
-
+import gc
 
 class LinksCrawler():
     def __init__(self, subdomain, project_name='tmp'):
@@ -26,6 +26,7 @@ class LinksCrawler():
         print("__del__方法被调用")
         del self.crawler
         del self.crawled_urls_to_check_dups
+        gc.collect()
 
     def prepare(self):
         '''
