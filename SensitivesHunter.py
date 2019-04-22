@@ -66,11 +66,17 @@ class SensitivesHunter():
         cmd = 'python3 ' + '{0}/LinksCrawler.py {1} {2}'.format(self.current_path,
                                                                 self.start_url, self.file_links_path)
         print("[*] cmd: {}".format(cmd))
+
+        p = subprocess.Popen(
+            ["python3", "{}/LinksCrawler.py".format(self.current_path), self.start_url, self.file_links_path],
+            stdout=subprocess.PIPE)
         try:
-            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-            (stdoutput, erroutput) = p.communicate()
-        except:
-            log.logger.debug(erroutput)
+            (stdoutput, erroutput) = p.communicate(timeout=1800) # 超时时间为30分钟
+        except subprocess.TimeoutExpired:
+            p.kill()
+            print("TIMEOUT: %s" % cmd)
+        except Exception as e:
+            log.logger.debug(e)
 
     def parseFileLinks(self):
         '''
