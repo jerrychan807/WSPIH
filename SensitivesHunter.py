@@ -31,8 +31,8 @@ class SensitivesHunter():
             self.crawlLinks()  # 爬取链接
             self.parseFileLinks()  # 解析爬取到的文件url
             for file_type, url_file_list in self.crawled_file_links_dict.items():
-                downloaded_file_path_list = self.downloadFile(url_file_list, file_type)
-                self.detectSensitiveFile(downloaded_file_path_list, file_type)
+                downloaded_file_path_dict = self.downloadFile(url_file_list, file_type)
+                self.detectSensitiveFile(downloaded_file_path_dict, file_type)
             self.saveResultFile()
 
     def tryToSkipCrawled(self):
@@ -71,7 +71,7 @@ class SensitivesHunter():
             ["python3", "{}/LinksCrawler.py".format(self.current_path), self.start_url, self.file_links_path],
             stdout=subprocess.PIPE)
         try:
-            (stdoutput, erroutput) = p.communicate(timeout=1800)  # 超时时间为30分钟
+            (stdoutput, erroutput) = p.communicate(timeout=1200)  # 超时时间为20分钟
         except subprocess.TimeoutExpired:
             p.kill()
             print("[*] TIMEOUT: %s" % cmd)
@@ -96,17 +96,17 @@ class SensitivesHunter():
         print("[*] start to downloadFile {0} :{1}".format(file_type, len(url_file_list)))
         download = DownLoader(self.domain_path, url_file_list, file_type)
         # download.prepare()
-        downloaded_file_path = download.startDownload()
-        return downloaded_file_path
+        downloaded_file_path_dict = download.startDownload()
+        return downloaded_file_path_dict
 
-    def detectSensitiveFile(self, downloaded_file_path_list, file_type):
+    def detectSensitiveFile(self, downloaded_file_path_dict, file_type):
         '''
         检测含敏感信息的文件
         :param file_type: 文件类型 
         :return: 
         '''
-        print("[*] start to detectSensitiveFile {0} :{1}".format(file_type, len(downloaded_file_path_list)))
-        parser = SensitiveFileParser(downloaded_file_path_list, file_type)
+        print("[*] start to detectSensitiveFile {0} :{1}".format(file_type, len(downloaded_file_path_dict)))
+        parser = SensitiveFileParser(downloaded_file_path_dict, file_type)
         sensitive_result_dict = parser.startParse()
         if sensitive_result_dict:
             self.result_dict = dict(sensitive_result_dict.items())
@@ -130,8 +130,10 @@ def main(target_txt, project_name):
         num += 1
         hunter = SensitivesHunter(url, project_name)
         print("[*] detecting NO.{} url".format(num))
-        hunter.startHunt()
-
+        try:
+            hunter.startHunt()
+        except Exception as e:
+            log.logger.debug(e)
 
 
 if __name__ == '__main__':

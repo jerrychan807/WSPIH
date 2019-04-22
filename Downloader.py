@@ -24,7 +24,7 @@ class DownLoader():
         self.domain_path = domain_path
         self.url_list = url_list
         self.file_type = file_type
-        self.saved_file_path_list = []
+        self.saved_file_path_dict = {}
 
     def getFileName(self, file_url):
         file_name = file_url.split("/")[-1]
@@ -50,29 +50,16 @@ class DownLoader():
             if str(r.status_code).startswith('2'):
                 with open(saved_file_path, "wb") as xls_file:
                     xls_file.write(r.content)
-                return saved_file_path
+                return file_url, saved_file_path
         except Exception as e:
             log.logger.debug(e)
-        return ''
+        return '', ''
 
     def startDownload(self):
-        executor = ThreadPoolExecutor(max_workers=10) # 并发下载
+        executor = ThreadPoolExecutor(max_workers=10)  # 并发下载
         all_task = [executor.submit(self.download, (url)) for url in self.url_list]
         for future in as_completed(all_task):
-            saved_file_path = future.result()
+            file_url, saved_file_path = future.result()
             if saved_file_path:
-                self.saved_file_path_list.append(saved_file_path)
-        return self.saved_file_path_list
-
-
-if __name__ == '__main__':
-    url_list = [
-        'http://wenfa.sdau.edu.cn/_upload/article/files/5d/c8/490da6e14e568f347c5f8c7b3ea0/b10e7574-7854-442e-9dc1-0bed27be0720.xlsx',
-        'http://wenfa.sdau.edu.cn/_upload/article/files/67/8b/059cb8444ac4a09d0e9b662c3d9f/722014e3-962b-4cf9-8a75-054b726cb54d.xlsx',
-        'http://wenfa.sdau.edu.cn/_upload/article/files/67/8b/059cb8444ac4a09d0e9b662c3d9f/722014e3-962b-4cf9-8a75-054b726cb541d.xlsx']
-    project_path = 'tmp/wenfa.sdau.edu.cn'
-    file_type = 'excel'
-    download = DownLoader(project_path, url_list, file_type)
-    download.prepare()
-    result = download.startDownload()
-    print(result)
+                self.saved_file_path_dict[file_url] = saved_file_path
+        return self.saved_file_path_dict

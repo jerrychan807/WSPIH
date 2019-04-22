@@ -15,8 +15,8 @@ parser_dict = {'excel': ExcelParser, 'word': WordParser, 'pdf': PdfParser}
 
 
 class SensitiveFileParser():
-    def __init__(self, downloaded_file_path_list, file_type):
-        self.downloaded_file_path_list = downloaded_file_path_list
+    def __init__(self, downloaded_file_path_dict, file_type):
+        self.downloaded_file_path_dict = downloaded_file_path_dict
         self.file_type = file_type
         self.sensitive_result_dict = {}
 
@@ -25,7 +25,7 @@ class SensitiveFileParser():
         开始解析 
         '''
 
-        for file in self.downloaded_file_path_list:
+        for file_url, file in self.downloaded_file_path_dict.items():
             parser = parser_dict[self.file_type](file)
             sensitive_dict = {}
             delete_flag = 1
@@ -38,7 +38,7 @@ class SensitiveFileParser():
                 log.logger.debug(file)
             else:
                 if sensitive_dict['phone'] or sensitive_dict['idcard'] or sensitive_dict['email']:
-                    self.sensitive_result_dict[file] = sensitive_dict
+                    self.sensitive_result_dict[file_url] = sensitive_dict
                     delete_flag = 0
             finally:
                 if delete_flag:
