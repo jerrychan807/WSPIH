@@ -30,15 +30,16 @@ class DownLoader():
         file_name = file_url.split("/")[-1]
         return file_name.strip()
 
-    def prepare(self):
-        self.saved_folder_path = os.path.join(self.domain_path, self.file_type)
-        makeDir(self.saved_folder_path)
+    # def prepare(self):
+    #     self.saved_folder_path = os.path.join(self.domain_path, self.file_type)
+    #     self.saved_folder_path = os.path.join(self.domain_path, self.file_type)
+    #     makeDir(self.saved_folder_path)
 
     # @exception(log.logger)
     def download(self, file_url):
         file_name = self.getFileName(file_url)
 
-        saved_file_path = os.path.join(self.saved_folder_path, file_name)
+        saved_file_path = os.path.join(self.domain_path, file_name)
 
         try:
             r = requests.get(file_url, headers=headers, verify=False)

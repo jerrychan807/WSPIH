@@ -3,6 +3,8 @@
 __author__ = 'jerry'
 
 from collections import defaultdict
+import sys
+import json
 
 from lib.common.basic import getExtension, getDomain
 from lib.third.nyawc.Crawler import Crawler
@@ -10,23 +12,16 @@ from lib.third.nyawc.CrawlerActions import CrawlerActions
 from lib.third.nyawc.Options import Options
 from lib.third.nyawc.http.Request import Request
 from lib.utils.extension import IGNORED_EXTESIONS, EXCEL_EXTENSIONS, WORD_EXTENSIONS, PDF_EXTENSIONS
-import gc
+
 
 class LinksCrawler():
-    def __init__(self, subdomain, project_name='tmp'):
+    def __init__(self, subdomain, file_links_path):
         self.subdomain = subdomain
-        self.project_name = project_name
+        self.file_links_path = file_links_path
         self.options = Options()
         self.crawled_urls_to_check_dups = []
         self.file_links = {'word': [], 'excel': [], 'pdf': []}
         self.other_links = defaultdict(list)
-
-    def __del__(self):
-
-        print("__del__方法被调用")
-        del self.crawler
-        del self.crawled_urls_to_check_dups
-        gc.collect()
 
     def prepare(self):
         '''
@@ -138,6 +133,7 @@ class LinksCrawler():
         crawled_urls_to_check_dups = self.crawled_urls_to_check_dups
         file_links = self.file_links
         other_links = self.other_links
+        file_links_path = self.file_links_path
 
         def cb_request_after_finish(queue, queue_item, new_queue_items):
             crawled_urls_to_check_dups.append(queue_item.request.url)  # Add newly obtained URL in list
@@ -163,6 +159,7 @@ class LinksCrawler():
                 #     query = ""
                 # other_links[path].append(query)
                 pass
+            open(file_links_path, "w").write(str(json.dumps(file_links)))
 
             return CrawlerActions.DO_CONTINUE_CRAWLING
 
@@ -179,8 +176,9 @@ class LinksCrawler():
 
 
 if __name__ == '__main__':
-    subdomain = "http://wenfa.sdau.edu.cn"
-    links_crawler = LinksCrawler(subdomain)
+    subdomain = sys.argv[1]
+    file_links_path = sys.argv[2]
+    links_crawler = LinksCrawler(subdomain, file_links_path)
     links_crawler.prepare()
     links_crawler.setOptions()
     links_crawler.startCrawl()

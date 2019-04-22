@@ -8,9 +8,9 @@
 import json
 import os
 import sys
+import subprocess
 
-from lib.common.basic import getCurrentPath, makeDir
-from LinksCrawler import LinksCrawler
+from lib.common.basic import getCurrentPath, makeDir, getDomain
 from Downloader import DownLoader
 from SensitiveFileParser import SensitiveFileParser
 
@@ -23,37 +23,40 @@ class SensitivesHunter():
         self.result_dict = {}
 
     def startHunt(self):
+        self.prepare()
         self.crawlLinks()  # 爬取链接
-        self.prepare(self.links_crawler.subdomain_name)
-        self.saveLinksInFile(self.links_crawler.file_links, self.links_crawler.other_links)
+        # self.saveLinksInFile(self.links_crawler.file_links, self.links_crawler.other_links)
         self.parseFileLinks()  # 解析爬取到的文件url
         for file_type, url_file_list in self.crawled_file_links_dict.items():
             downloaded_file_path_list = self.downloadFile(url_file_list, file_type)
             self.detectSensitiveFile(downloaded_file_path_list, file_type)
         self.saveResultFile()
 
-    def prepare(self, subdomain_name):
+    def prepare(self):
         '''
         创建存放的文件夹和文件
         '''
-        current_path = getCurrentPath()
-        project_path = os.path.join(current_path, self.project_name)
+
+        self.current_path = getCurrentPath()
+        project_path = os.path.join(self.current_path, self.project_name)
         makeDir(project_path)
+        subdomain_name = getDomain(self.start_url)
         self.domain_path = os.path.join(project_path, subdomain_name)
         makeDir(self.domain_path)
         self.file_links_path = os.path.join(self.domain_path, 'file_links.json')
-        self.other_links_path = os.path.join(self.domain_path, 'other_links.json')
+        # self.other_links_path = os.path.join(self.domain_path, 'other_links.json')
         self.finally_result_path = os.path.join(self.domain_path, 'result.json')
 
     def crawlLinks(self):
         '''
         爬取链接
         '''
-        self.links_crawler = LinksCrawler(self.start_url)
-        self.links_crawler.prepare()
-        self.links_crawler.setOptions()
-        self.links_crawler.startCrawl()
-        # print(self.links_crawler.file_links)
+        cmd = 'python3 ' + '{0}/LinksCrawler.py {1} {2}'.format(self.current_path,
+                                                                self.start_url, self.file_links_path, )
+        print("[*] cmd: {}".format(cmd))
+
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+        (stdoutput, erroutput) = p.communicate()
 
     def saveLinksInFile(self, file_links, other_links):
         '''
@@ -62,8 +65,8 @@ class SensitivesHunter():
 
         with open(self.file_links_path, "w") as f1:
             f1.write(str(json.dumps(file_links)))
-        with open(self.other_links_path, "w") as f2:
-            f2.write(str(json.dumps(other_links)))
+            # with open(self.other_links_path, "w") as f2:
+            #     f2.write(str(json.dumps(other_links)))
 
     def parseFileLinks(self):
         '''
@@ -80,7 +83,7 @@ class SensitivesHunter():
         下载文件
         '''
         download = DownLoader(self.domain_path, url_file_list, file_type)
-        download.prepare()
+        # download.prepare()
         downloaded_file_path = download.startDownload()
         return downloaded_file_path
 
