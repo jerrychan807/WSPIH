@@ -71,10 +71,10 @@ class SensitivesHunter():
             ["python3", "{}/LinksCrawler.py".format(self.current_path), self.start_url, self.file_links_path],
             stdout=subprocess.PIPE)
         try:
-            (stdoutput, erroutput) = p.communicate(timeout=1800) # 超时时间为30分钟
+            (stdoutput, erroutput) = p.communicate(timeout=1800)  # 超时时间为30分钟
         except subprocess.TimeoutExpired:
             p.kill()
-            print("TIMEOUT: %s" % cmd)
+            print("[*] TIMEOUT: %s" % cmd)
         except Exception as e:
             log.logger.debug(e)
 
@@ -125,9 +125,13 @@ def main(target_txt, project_name):
     with open(target_txt, 'r') as f:
         url_list = [url.strip() for url in f]
     print("[*] target length is :{}".format(len(url_list)))
+    num = 0
     for url in url_list:
+        num += 1
         hunter = SensitivesHunter(url, project_name)
+        print("[*] detecting NO.{} url".format(num))
         hunter.startHunt()
+
 
 
 if __name__ == '__main__':
