@@ -46,6 +46,6 @@ def combineReuslt(folder_name):
 
 
 if __name__ == '__main__':
-    # folder_name = sys.argv[1]
-    folder_name = 'result'
+    folder_name = sys.argv[1]
+    # folder_name = 'result'
     combineReuslt(folder_name)
