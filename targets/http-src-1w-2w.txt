@@ -1,3 +1,15 @@
+http://cams.jgsu.edu.cn
+http://pop.sdust.edu.cn
+http://new.sues.edu.cn
+http://sjc.swu.edu.cn
+http://jjs.fjnu.edu.cn
+http://sb.scuec.edu.cn
+http://lcyx.fudan.edu.cn
+http://huanjing.xjtu.edu.cn
+http://ccc.ntu.edu.cn
+http://tw.ynnu.edu.cn
+http://de.nju.edu.cn
+http://pe.sspu.edu.cn
 http://bsbm.smmu.edu.cn
 http://mc.xhu.edu.cn
 http://lib.bc.buu.edu.cn
@@ -9985,3 +9997,4 @@ http://kjfw.njau.edu.cn
 http://jsjyb.jxnu.edu.cn
 http://48123.com_www.sust.edu.cn
 http://qzlx.zt.ccut.edu.cn
+http://2rd9.chnu.edu.cn
