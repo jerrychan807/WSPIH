@@ -42,8 +42,9 @@ class DownLoader():
         saved_file_path = os.path.join(self.domain_path, file_name)
 
         try:
-            r = requests.get(file_url, headers=headers, verify=False)
-
+            r = requests.get(file_url, headers=headers, verify=False, timeout=20)
+            # refs:https://segmentfault.com/q/1010000004935548
+            # 当未指定超时时间时，默认的超时时间是 None，亦即连接永远不会超时。
             # print(r.status_code) # debug时使用
 
             if str(r.status_code).startswith('2'):
@@ -55,7 +56,7 @@ class DownLoader():
         return ''
 
     def startDownload(self):
-        executor = ThreadPoolExecutor(max_workers=5)
+        executor = ThreadPoolExecutor(max_workers=10) # 并发下载
         all_task = [executor.submit(self.download, (url)) for url in self.url_list]
         for future in as_completed(all_task):
             saved_file_path = future.result()

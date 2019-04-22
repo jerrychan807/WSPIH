@@ -56,7 +56,7 @@ class LinksCrawler():
         self.options.scope.subdomain_must_match = True  # 子域名
         self.options.scope.hostname_must_match = True  # 主机名
         self.options.scope.tld_must_match = True  # 顶级域名
-        self.options.scope.max_depth = 20  # 深度
+        self.options.scope.max_depth = 15  # 深度
         self.options.scope.request_methods = [  # 允许的方法
             Request.METHOD_GET,
             Request.METHOD_POST,

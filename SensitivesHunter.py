@@ -10,6 +10,7 @@ import os
 import sys
 import subprocess
 
+from lib.config import log
 from lib.common.basic import getCurrentPath, makeDir, getDomain
 from Downloader import DownLoader
 from SensitiveFileParser import SensitiveFileParser
@@ -21,16 +22,26 @@ class SensitivesHunter():
         self.project_name = project_name
         self.crawled_file_links_dict = {}
         self.result_dict = {}
+        self.skip_flag = False  # 跳过爬取的标志
 
     def startHunt(self):
         self.prepare()
-        self.crawlLinks()  # 爬取链接
-        # self.saveLinksInFile(self.links_crawler.file_links, self.links_crawler.other_links)
-        self.parseFileLinks()  # 解析爬取到的文件url
-        for file_type, url_file_list in self.crawled_file_links_dict.items():
-            downloaded_file_path_list = self.downloadFile(url_file_list, file_type)
-            self.detectSensitiveFile(downloaded_file_path_list, file_type)
-        self.saveResultFile()
+        self.tryToSkipCrawled()
+        if not self.skip_flag:
+            self.crawlLinks()  # 爬取链接
+            self.parseFileLinks()  # 解析爬取到的文件url
+            for file_type, url_file_list in self.crawled_file_links_dict.items():
+                downloaded_file_path_list = self.downloadFile(url_file_list, file_type)
+                self.detectSensitiveFile(downloaded_file_path_list, file_type)
+            self.saveResultFile()
+
+    def tryToSkipCrawled(self):
+        '''
+        不重复爬取
+        '''
+        if os.path.exists(self.file_links_path):
+            print("[*] skip this site {}".format(self.start_url))
+            self.skip_flag = True
 
     def prepare(self):
         '''
@@ -51,27 +62,21 @@ class SensitivesHunter():
         '''
         爬取链接
         '''
+        print("[*] start to crawlLinks {}".format(self.start_url))
         cmd = 'python3 ' + '{0}/LinksCrawler.py {1} {2}'.format(self.current_path,
-                                                                self.start_url, self.file_links_path, )
+                                                                self.start_url, self.file_links_path)
         print("[*] cmd: {}".format(cmd))
-
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-        (stdoutput, erroutput) = p.communicate()
-
-    def saveLinksInFile(self, file_links, other_links):
-        '''
-        将链接保存在文件中
-        '''
-
-        with open(self.file_links_path, "w") as f1:
-            f1.write(str(json.dumps(file_links)))
-            # with open(self.other_links_path, "w") as f2:
-            #     f2.write(str(json.dumps(other_links)))
+        try:
+            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+            (stdoutput, erroutput) = p.communicate()
+        except:
+            log.logger.debug(erroutput)
 
     def parseFileLinks(self):
         '''
         解析爬取到的文件url
         '''
+        print("[*] start to parseFileLinks")
         if os.path.exists(self.file_links_path):
             with open(self.file_links_path, 'r') as f:
                 print('[*] reading {0}'.format(self.file_links_path))
@@ -82,6 +87,7 @@ class SensitivesHunter():
         '''
         下载文件
         '''
+        print("[*] start to downloadFile {0} :{1}".format(file_type, len(url_file_list)))
         download = DownLoader(self.domain_path, url_file_list, file_type)
         # download.prepare()
         downloaded_file_path = download.startDownload()
@@ -93,6 +99,7 @@ class SensitivesHunter():
         :param file_type: 文件类型 
         :return: 
         '''
+        print("[*] start to detectSensitiveFile {0} :{1}".format(file_type, len(downloaded_file_path_list)))
         parser = SensitiveFileParser(downloaded_file_path_list, file_type)
         sensitive_result_dict = parser.startParse()
         if sensitive_result_dict:
