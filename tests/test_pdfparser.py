@@ -5,12 +5,12 @@
 # software: PyCharm
 
 import unittest
-from lib.parser.PdfParser import PDF_Parser
+from lib.parser.PdfParser import PdfParser
 
 
 class TestPDFParser(unittest.TestCase):
     file_path = 'data/pdf.pdf'
-    PDF_parser = PDF_Parser(file_path)
+    PDF_parser = PdfParser(file_path)
 
     def test_get_idcard(self):
         self.PDF_parser.read()

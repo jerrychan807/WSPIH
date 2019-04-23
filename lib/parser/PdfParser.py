@@ -76,3 +76,5 @@ class PdfParser(BaseParser):
         fp.close()
         self.reduce_error_report()
         return self.sensitive_dict
+
+

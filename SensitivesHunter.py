@@ -137,7 +137,7 @@ def main(target_txt, project_name):
 
 
 if __name__ == '__main__':
-    # url = 'http://wenfa.sdau.edu.cn'
+    # url = 'http://zcsy.sxu.edu.cn/'
     # project_name = 'tmp'
     target_txt = sys.argv[1]
     project_name = sys.argv[2] if sys.argv[2] else 'tmp'
