@@ -43,8 +43,7 @@ class DownLoader():
 
         try:
             r = requests.get(file_url, headers=headers, verify=False, timeout=20)
-            # refs:https://segmentfault.com/q/1010000004935548
-            # 当未指定超时时间时，默认的超时时间是 None，亦即连接永远不会超时。
+            # 当未指定超时时间时，默认的超时时间是 None，亦即连接永远不会超时。 refs:https://segmentfault.com/q/1010000004935548
             # print(r.status_code) # debug时使用
 
             if str(r.status_code).startswith('2'):
@@ -52,7 +51,8 @@ class DownLoader():
                     xls_file.write(r.content)
                 return file_url, saved_file_path
         except Exception as e:
-            log.logger.debug(e)
+            pass  # 报错日志过多
+            # log.logger.debug(e)
         return '', ''
 
     def startDownload(self):

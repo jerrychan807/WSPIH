@@ -34,8 +34,9 @@ class SensitiveFileParser():
             # print(sensitive_dict)
             except Exception as e:
                 # 无法解析的情况
-                log.logger.debug(e)
-                log.logger.debug(file)
+                pass # 报错日志过多
+                # log.logger.debug(e)
+                # log.logger.debug(file)
             else:
                 if sensitive_dict['phone'] or sensitive_dict['idcard'] or sensitive_dict['email']:
                     self.sensitive_result_dict[file_url] = sensitive_dict

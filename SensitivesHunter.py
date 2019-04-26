@@ -76,7 +76,8 @@ class SensitivesHunter():
             p.kill()
             print("[*] TIMEOUT: %s" % cmd)
         except Exception as e:
-            log.logger.debug(e)
+            pass
+            # log.logger.debug(e) 报错日志过多
 
     def parseFileLinks(self):
         '''
@@ -133,7 +134,8 @@ def main(target_txt, project_name):
         try:
             hunter.startHunt()
         except Exception as e:
-            log.logger.debug(e)
+            pass
+            # log.logger.debug(e) 报错日志过多
 
 
 if __name__ == '__main__':
