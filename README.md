@@ -15,7 +15,14 @@
 
 ---
 
-# 使用:
+# 使用效果:
+
+![](https://github.com/jerrychan807/WSPIH/blob/master/img/sc2.png)
+![](https://github.com/jerrychan807/WSPIH/blob/master/img/sc1.png)
+
+---
+
+# 使用步骤:
 
 ## 初始化:
 
@@ -74,12 +81,6 @@ python3 CombineResult.py src
 - 本项目仅供学习,交流使用.勿用于非法用途。
 - 如果目标是学校网站,麻烦把漏洞提交到[教育行业漏洞报告平台](https://src.edu-info.edu.cn),谢谢.
 
----
-
-# Screenshot:
-
-![](https://github.com/jerrychan807/WSPIH/blob/master/img/sc1.png)
-![](https://github.com/jerrychan807/WSPIH/blob/master/img/sc2.png)
 
 ---
 
