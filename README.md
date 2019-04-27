@@ -47,7 +47,7 @@ vi config.py
 python3 SensitivesHunter.py 目标文件 结果文件夹
 
 # 示例
-python3 SensitivesHunter.py target/http-src-1-1w.txt src
+python3 SensitivesHunter.py targets/http-src-1-1w.txt src
 ```
 
 

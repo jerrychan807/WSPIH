@@ -16,6 +16,7 @@ from Downloader import DownLoader
 from SensitiveFileParser import SensitiveFileParser
 import config
 
+
 class SensitivesHunter():
     def __init__(self, url, project_name):
         self.start_url = url
@@ -76,8 +77,8 @@ class SensitivesHunter():
             p.kill()
             print("[*] TIMEOUT: %s" % cmd)
         except Exception as e:
-            pass
-            # log.logger.debug(e) 报错日志过多
+            # pass
+            log.logger.debug(e)  # 报错日志过多
 
     def parseFileLinks(self):
         '''
@@ -134,8 +135,8 @@ def main(target_txt, project_name):
         try:
             hunter.startHunt()
         except Exception as e:
-            pass
-            # log.logger.debug(e) 报错日志过多
+            # pass
+            log.logger.debug(e)  # 报错日志过多
 
 
 if __name__ == '__main__':
