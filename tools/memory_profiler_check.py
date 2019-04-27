@@ -29,7 +29,7 @@ class SensitivesHunter():
 
         self.saveLinksInFile(self.links_crawler.file_links, self.links_crawler.other_links)
         self.gc()  # 垃圾回收
-        
+
         self.parseFileLinks()  # 解析爬取到的文件url
         for file_type, url_file_list in self.crawled_file_links_dict.items():
             downloaded_file_path_list = self.downloadFile(url_file_list, file_type)

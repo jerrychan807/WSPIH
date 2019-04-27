@@ -13,6 +13,8 @@ from lib.third.nyawc.Options import Options
 from lib.third.nyawc.http.Request import Request
 from lib.utils.extension import IGNORED_EXTESIONS, EXCEL_EXTENSIONS, WORD_EXTENSIONS, PDF_EXTENSIONS
 
+import config
+
 
 class LinksCrawler():
     def __init__(self, subdomain, file_links_path):
@@ -44,8 +46,8 @@ class LinksCrawler():
         refs: https://tijme.github.io/not-your-average-web-crawler/latest/options_performance.html
         '''
 
-        self.options.performance.max_threads = 20  # 线程
-        self.options.performance.request_timeout = 30  # 超时时间
+        self.options.performance.max_threads = config.CRAWLER_MAX_THREADS  # 线程
+        self.options.performance.request_timeout = config.CRAWLER_REQUEST_TIMEOUT  # 超时时间
 
     def _setScopeOptions(self):
         '''
@@ -56,7 +58,7 @@ class LinksCrawler():
         self.options.scope.subdomain_must_match = True  # 子域名
         self.options.scope.hostname_must_match = True  # 主机名
         self.options.scope.tld_must_match = True  # 顶级域名
-        self.options.scope.max_depth = 15  # 深度
+        self.options.scope.max_depth = config.CRAWLER_MAX_DEPTH  # 深度
         self.options.scope.request_methods = [  # 允许的方法
             Request.METHOD_GET,
             Request.METHOD_POST,

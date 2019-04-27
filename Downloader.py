@@ -8,6 +8,7 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 import os
+import config
 
 requests.packages.urllib3.disable_warnings()
 
@@ -42,7 +43,7 @@ class DownLoader():
         saved_file_path = os.path.join(self.domain_path, file_name)
 
         try:
-            r = requests.get(file_url, headers=headers, verify=False, timeout=20)
+            r = requests.get(file_url, headers=headers, verify=False, timeout=config.DOWNLOAD_TIMEOUT)
             # 当未指定超时时间时，默认的超时时间是 None，亦即连接永远不会超时。 refs:https://segmentfault.com/q/1010000004935548
             # print(r.status_code) # debug时使用
 
@@ -56,7 +57,7 @@ class DownLoader():
         return '', ''
 
     def startDownload(self):
-        executor = ThreadPoolExecutor(max_workers=10)  # 并发下载
+        executor = ThreadPoolExecutor(max_workers=config.DOWNLOAD_WORKER_NUM)  # 并发下载
         all_task = [executor.submit(self.download, (url)) for url in self.url_list]
         for future in as_completed(all_task):
             file_url, saved_file_path = future.result()

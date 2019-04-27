@@ -14,7 +14,7 @@ from lib.config import log
 from lib.common.basic import getCurrentPath, makeDir, getDomain
 from Downloader import DownLoader
 from SensitiveFileParser import SensitiveFileParser
-
+import config
 
 class SensitivesHunter():
     def __init__(self, url, project_name):
@@ -71,7 +71,7 @@ class SensitivesHunter():
             ["python3", "{}/LinksCrawler.py".format(self.current_path), self.start_url, self.file_links_path],
             stdout=subprocess.PIPE)
         try:
-            (stdoutput, erroutput) = p.communicate(timeout=1200)  # 超时时间为20分钟
+            (stdoutput, erroutput) = p.communicate(timeout=config.CRAWLER_SITE_TIMEOUT)  # 超时时间为20分钟
         except subprocess.TimeoutExpired:
             p.kill()
             print("[*] TIMEOUT: %s" % cmd)
