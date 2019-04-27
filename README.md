@@ -35,7 +35,7 @@ vi config.py
 
 ## 开始扫描:
 
-```python
+```bash
 # 使用
 python3 SensitivesHunter.py 目标文件 结果文件夹
 
@@ -57,7 +57,7 @@ python3 SensitivesHunter.py target/http-src-1-1w.txt src
 
 ### 汇总结果:
 
-```python
+```bash
 # 输出最终汇总的结果
 python3 CombineResult.py 结果文件夹
 
