@@ -5,14 +5,15 @@
 
 ![](https://github.com/jerrychan807/WSPIH/blob/master/img/logo.png)
 
-Website sensitive personal information hunter
-
 网站个人敏感信息扫描器
+
+---
 
 # 介绍:
 
+![](https://github.com/jerrychan807/WSPIH/blob/master/img/flow.png)
 
-![](https://i.loli.net/2019/04/27/5cc410da689f2.png)
+---
 
 # 使用:
 
@@ -21,25 +22,66 @@ Website sensitive personal information hunter
 ```bash
 # 下载
 git clone https://github.com/jerrychan807/WSPIH.git
-```
 
-```bash
+# 进入项目目录
 cd WSPIH
-```
 
-```bash
 # 安装依赖模块
+pip3 install -r requirements.txt
 
+# 修改配置文件(若不修改,则使用默认配置)
+vi config.py
 ```
 
 ## 开始扫描:
 
+```python
+# 使用
+python3 SensitivesHunter.py 目标文件 结果文件夹
 
-## 输出结果:
+# 示例
+python3 SensitivesHunter.py target/http-src-1-1w.txt src
+```
 
 
+## 查看结果:
+
+如果有扫出敏感文件...
+
+### 单个结果:
+
+- 每个目标的结果会保存在 结果文件夹/对应域名 下.
+- 会保留有问题的敏感文件
+- 文件链接`file_links.json`、敏感结果`result.json`
+
+
+### 汇总结果:
+
+```python
+# 输出最终汇总的结果
+python3 CombineResult.py 结果文件夹
+
+# 示例
+python3 CombineResult.py src
+```
+
+- 查看最终合并的结果:`all_result.txt `
+
+> 麻烦把漏洞提交到[教育行业漏洞报告平台](https://src.edu-info.edu.cn)
 
 ---
+
+# Screenshot:
+
+![](https://github.com/jerrychan807/WSPIH/blob/master/img/sc1.png)
+![](https://github.com/jerrychan807/WSPIH/blob/master/img/sc2.png)
+
+---
+
+# Contributors:
+
+- JackChan1024
+
 
 
 
