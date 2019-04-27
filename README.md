@@ -5,7 +5,7 @@
 
 ![](https://github.com/jerrychan807/WSPIH/blob/master/img/logo.png)
 
-网站个人敏感信息扫描器
+网站个人敏感信息文件扫描器
 
 ---
 
@@ -67,7 +67,11 @@ python3 CombineResult.py src
 
 - 查看最终合并的结果:`all_result.txt `
 
-> 麻烦把漏洞提交到[教育行业漏洞报告平台](https://src.edu-info.edu.cn)
+---
+
+# Ps:
+
+> 如果目标是学校网站,麻烦把漏洞提交到[教育行业漏洞报告平台](https://src.edu-info.edu.cn),谢谢.
 
 ---
 
