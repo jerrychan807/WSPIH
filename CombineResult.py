@@ -10,10 +10,13 @@
 import os
 import sys
 import json
-
+import platform
 
 def combineReuslt(folder_name):
-    cmd = "find {0}/* -name 'result.json'".format(folder_name)
+    system_info = platform.system()
+    cmd = "for /r {0} %i in (*result.json) do @echo %i".format(folder_name) if system_info == 'Windows' else "find {0}/* -name 'result.json'".format(folder_name)
+    # refs:https://blog.csdn.net/Cashey1991/article/details/44993403
+    print ("[*]cmd: {0}".format(cmd))
     output = os.popen(cmd)
 
     output_str = output.read()
