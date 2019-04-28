@@ -9,7 +9,7 @@ only support .docx file recently
 read local .dock file and check the sensitive words
 '''
 
-from lib.third import docx
+import docx
 from lib.parser.BaseParser import BaseParser
 
 

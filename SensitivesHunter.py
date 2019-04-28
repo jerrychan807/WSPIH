@@ -9,7 +9,6 @@ import json
 import os
 import sys
 import subprocess
-
 from lib.config import log
 from lib.common.basic import getCurrentPath, makeDir, getDomain
 from Downloader import DownLoader
@@ -64,12 +63,12 @@ class SensitivesHunter():
         爬取链接
         '''
         print("[*] start to crawlLinks {}".format(self.start_url))
-        cmd = 'python3 ' + '{0}/LinksCrawler.py {1} {2}'.format(self.current_path,
+        cmd = '{0} '.format(config.PY_EXECUTABLE_PATH) + '{0}/LinksCrawler.py {1} {2}'.format(self.current_path,
                                                                 self.start_url, self.file_links_path)
         print("[*] cmd: {}".format(cmd))
 
         p = subprocess.Popen(
-            ["python3", "{}/LinksCrawler.py".format(self.current_path), self.start_url, self.file_links_path],
+            ["{}".format(config.PY_EXECUTABLE_PATH), "{}/LinksCrawler.py".format(self.current_path), self.start_url, self.file_links_path],
             stdout=subprocess.PIPE)
         try:
             (stdoutput, erroutput) = p.communicate(timeout=config.CRAWLER_SITE_TIMEOUT)  # 超时时间为20分钟
@@ -132,11 +131,11 @@ def main(target_txt, project_name):
         num += 1
         hunter = SensitivesHunter(url, project_name)
         print("[*] detecting NO.{} url".format(num))
-        try:
-            hunter.startHunt()
-        except Exception as e:
+        #try:
+        hunter.startHunt()
+        #except Exception as e:
             # pass
-            log.logger.debug(e)  # 报错日志过多
+        #    log.logger.debug(e)  # 报错日志过多
 
 
 if __name__ == '__main__':

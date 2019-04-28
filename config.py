@@ -4,6 +4,8 @@
 # @Author  : Jerry
 # @Desc    : 
 # @File    : config.py
+import sys 
+PY_EXECUTABLE_PATH = sys.executable
 
 # 爬取网站超时时间,单位为s
 CRAWLER_SITE_TIMEOUT = 1200
