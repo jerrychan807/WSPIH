@@ -71,7 +71,7 @@ class SensitivesHunter():
             ["{}".format(config.PY_EXECUTABLE_PATH), "{}/LinksCrawler.py".format(self.current_path), self.start_url, self.file_links_path],
             stdout=subprocess.PIPE)
         try:
-            (stdoutput, erroutput) = p.communicate(timeout=config.CRAWLER_SITE_TIMEOUT)  # 超时时间为20分钟
+            (stdoutput, erroutput) = p.communicate(timeout=config.CRAWLER_SITE_TIMEOUT)  # 超时时间
         except subprocess.TimeoutExpired:
             p.kill()
             print("[*] TIMEOUT: %s" % cmd)
