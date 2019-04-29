@@ -13,12 +13,22 @@
 
 ![](https://github.com/jerrychan807/WSPIH/blob/master/img/flow.png)
 
+[开发记录](https://jerrychan807.github.io/2019/04/25/WPSIH-%E7%BD%91%E7%AB%99%E4%B8%AA%E4%BA%BA%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%96%87%E4%BB%B6%E6%89%AB%E6%8F%8F%E5%99%A8-%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/)
+
 ---
 
 # 使用效果:
 
 ![](https://github.com/jerrychan807/WSPIH/blob/master/img/sc2.png)
 ![](https://github.com/jerrychan807/WSPIH/blob/master/img/sc1.png)
+
+---
+
+# 数据统计:
+
+![](https://github.com/jerrychan807/WSPIH/blob/1e06930910ec3cd615c5762840d0b7d71c6133cf/img/data1.png)
+
+![](https://github.com/jerrychan807/WSPIH/blob/1e06930910ec3cd615c5762840d0b7d71c6133cf/img/data2.png)
 
 ---
 
