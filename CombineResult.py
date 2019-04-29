@@ -23,30 +23,33 @@ def combineReuslt(folder_name):
     result_json_list = output_str.strip().split('\n')
     print(result_json_list)
 
-    all_result_dict = {}
-    for each_result in result_json_list:
-        print('[*] reading {0}'.format(each_result))
+    try:
+        all_result_dict = {}
+        for each_result in result_json_list:
+            print('[*] reading {0}'.format(each_result))
 
-        with open(each_result, 'r') as f:
-            temp_result_dict = json.load(f)
-            all_result_dict.update(temp_result_dict)
+            with open(each_result, 'r') as f:
+                temp_result_dict = json.load(f)
+                all_result_dict.update(temp_result_dict)
 
-    # print(all_result_dict)
+        # print(all_result_dict)
 
-    # 写入all_result.txt文件
-    with open("all_result.txt", 'w') as f:
-        f.write("vulnerable url num is {0}\n".format(len(all_result_dict)))
-        f.write("-------------------\n")
-        for url, value_list in all_result_dict.items():
-            f.write("url: {}\n".format(url))
-            if value_list['phone']:
-                f.write("phone evidence: {}\n".format(",".join(value_list['phone'])))
-            if value_list['idcard']:
-                f.write("idcard evidence: {}\n".format(",".join(value_list['idcard'])))
-            if value_list['email']:
-                f.write("email evidence: {}\n".format(",".join(value_list['email'])))
+        # 写入all_result.txt文件
+        with open("all_result.txt", 'w') as f:
+            f.write("vulnerable url num is {0}\n".format(len(all_result_dict)))
             f.write("-------------------\n")
-
+            for url, value_list in all_result_dict.items():
+                f.write("url: {}\n".format(url))
+                if value_list['phone']:
+                    f.write("phone evidence: {}\n".format(",".join(value_list['phone'])))
+                if value_list['idcard']:
+                    f.write("idcard evidence: {}\n".format(",".join(value_list['idcard'])))
+                if value_list['email']:
+                    f.write("email evidence: {}\n".format(",".join(value_list['email'])))
+                f.write("-------------------\n")
+        print("\n[!!!!] your sensitive result is saved as all_result.txt...")
+    except FileNotFoundError:
+        print("\n[-] your sensitive result is empty...")
 
 if __name__ == '__main__':
     folder_name = sys.argv[1]
