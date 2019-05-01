@@ -9,6 +9,16 @@
 
 ---
 
+
+# 声明:
+
+- 本项目仅供学习,测试,交流使用.勿用于非法用途。
+- 如果目标是学校网站,麻烦把漏洞提交到[教育行业漏洞报告平台](https://src.edu-info.edu.cn),谢谢.
+
+> 教育行业漏洞报告平台是一个面向全教育行业的漏洞报告平台。平台旨在汇聚多方力量，帮助提升教育系统关联学校、单位的信息系统安全性，为推进教育信息化建设保驾护航。
+
+---
+
 # 介绍:
 
 ![](https://github.com/jerrychan807/WSPIH/blob/master/img/flow.png)
@@ -22,13 +32,6 @@
 ![](https://github.com/jerrychan807/WSPIH/blob/master/img/sc2.png)
 ![](https://github.com/jerrychan807/WSPIH/blob/master/img/sc1.png)
 
----
-
-# 数据统计:
-
-![](https://github.com/jerrychan807/WSPIH/blob/1e06930910ec3cd615c5762840d0b7d71c6133cf/img/data1.png)
-
-![](https://github.com/jerrychan807/WSPIH/blob/1e06930910ec3cd615c5762840d0b7d71c6133cf/img/data2.png)
 
 ---
 
@@ -84,14 +87,6 @@ python3 CombineResult.py src
 
 - 查看最终合并的结果:`all_result.txt `
 
----
-
-# Ps:
-
-- 本项目仅供学习,测试,交流使用.勿用于非法用途。
-- 如果目标是学校网站,麻烦把漏洞提交到[教育行业漏洞报告平台](https://src.edu-info.edu.cn),谢谢.
-
-> 教育行业漏洞报告平台是一个面向全教育行业的漏洞报告平台。平台旨在汇聚多方力量，帮助提升教育系统关联学校、单位的信息系统安全性，为推进教育信息化建设保驾护航。
 
 
 ---
