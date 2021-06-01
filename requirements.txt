@@ -36,5 +36,5 @@ sphinx-better-theme==0.1.5
 sphinxcontrib-napoleon==0.7
 sphinxcontrib-websupport==1.1.0
 tldextract==2.2.1
-urllib3==1.24.1
+urllib3==1.26.5
 xlrd==1.2.0
