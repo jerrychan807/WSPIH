@@ -9,7 +9,7 @@ docutils==0.14
 idna==2.8
 imagesize==1.1.0
 Jinja2==2.10.1
-lxml==4.3.0
+lxml==4.9.1
 MarkupSafe==1.1.1
 more-itertools==7.0.0
 nyawc==1.8.2
